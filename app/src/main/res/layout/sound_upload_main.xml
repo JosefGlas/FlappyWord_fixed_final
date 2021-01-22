@@ -11,19 +11,20 @@
 
     <ListView
         android:id="@+id/songList"
-        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
     <Button
         android:id="@+id/BackButtonCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/kruemmung"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/backbttn"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
-        android:text="Back"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
 
         android:textSize="16sp"
         android:textStyle="bold" />

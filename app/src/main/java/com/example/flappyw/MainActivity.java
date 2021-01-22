@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class MainActivity extends AppCompatActivity {
@@ -82,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     public void startGame(View view) {
         Intent go = new Intent(MainActivity.this, com.example.flappyw.StartGame.class);

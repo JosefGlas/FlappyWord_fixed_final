@@ -58,10 +58,9 @@ public class Bird extends BaseObject{
             return  Bitmap.createBitmap(scaledbm, 0,0 , scaledbm.getWidth(),scaledbm.getHeight(),matrix,true);
         }else {
             Matrix matrix = new Matrix();
-            return  Bitmap.createBitmap(scaledbm, 0,0 , scaledbm.getWidth(),scaledbm.getHeight(),matrix,true);
-        }
+            return Bitmap.createBitmap(scaledbm, 0, 0, scaledbm.getWidth(), scaledbm.getHeight(), matrix, true);
 
-        //return this.scaledbm;
+        }
     }
 
 }

@@ -110,7 +110,7 @@ public class CreateActivity extends Activity {
             });
         }
 
-        Button clickButton8 = (Button) findViewById(R.id.SongButton);
+      /* Button clickButton8 = (Button) findViewById(R.id.SongButton);
         if (clickButton8 != null) {
             clickButton8.setOnClickListener(new View.OnClickListener() {
 
@@ -119,9 +119,9 @@ public class CreateActivity extends Activity {
                     startAudioSelect();
                 }
             });
-        }
+        }*/
 
-        Button clickButton9 = (Button) findViewById(R.id.NoSongButton);
+  /*      Button clickButton9 = (Button) findViewById(R.id.NoSongButton);
         if (clickButton9 != null) {
             clickButton9.setOnClickListener(new View.OnClickListener() {
 
@@ -131,7 +131,7 @@ public class CreateActivity extends Activity {
                 }
             });
         }
-    }
+*/    }
 
     public void startTubePicture() {
         Intent tube = new Intent(this, TubePictureActivity.class);
@@ -239,7 +239,23 @@ public class CreateActivity extends Activity {
         this.finish();
     }
 
-    public void startAudioSelect() {
+    public void back(View view) {
+        Intent backmain2 = new Intent(CreateActivity.this, MainActivity.class);
+        if (Background != null) {
+            try {
+                backmain2.putExtra("Key 4", saveBitmap(Background));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Background Transfer not working");
+            }
+        }
+
+        startActivity(backmain2);
+        overridePendingTransition(R.transition.transition_quick, R.transition.transition_quick);
+        finish();
+    }
+
+  /*  public void startAudioSelect() {
         try {
             Intent goo = new Intent(CreateActivity.this, SoundUploadMain.class);
             startActivity(goo);
@@ -247,6 +263,6 @@ public class CreateActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("OOOK");
-        }
+        }*/
     }
-}
+

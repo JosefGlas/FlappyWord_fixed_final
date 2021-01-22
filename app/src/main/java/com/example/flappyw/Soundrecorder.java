@@ -25,10 +25,9 @@ public class Soundrecorder extends AppCompatActivity {
     private Button play, stop, record;
     private MediaRecorder myAudioRecorder;
     private String flappsound;
-    private static final int REQUEST_AUDIO_PERMISSION_CODE=1;
+    private static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
     public long Starttime = 0;
     long milis;
-
 
 
     @Override
@@ -36,22 +35,21 @@ public class Soundrecorder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sound_recorder);
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1024);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1024);
         }
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.RECORD_AUDIO},10);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 10);
         }
-
 
 
         play = (Button) findViewById(R.id.play);
         stop = (Button) findViewById(R.id.stop);
         record = (Button) findViewById(R.id.record);
-        TextView timeview =(TextView) findViewById(R.id.timebar);
+        TextView timeview = (TextView) findViewById(R.id.timebar);
         stop.setEnabled(false);
         play.setEnabled(false);
 
@@ -71,31 +69,30 @@ public class Soundrecorder extends AppCompatActivity {
             @Override
             public void run() {
 
-                milis = System.currentTimeMillis()-Starttime;
+                milis = System.currentTimeMillis() - Starttime;
                 System.out.println(milis);
-                timehandler.postDelayed(this,0);
-                if(milis >= 3000){
+                timehandler.postDelayed(this, 0);
+                if (milis >= 3000) {
                     timehandler.removeCallbacks(this);
                 }
-                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)timeview.getLayoutParams();
-                lp.width= (int) (330*milis/Constants.SCREEN_WIDTH);
+                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) timeview.getLayoutParams();
+                lp.width = (int) (330 * milis / Constants.SCREEN_WIDTH);
                 timeview.setLayoutParams(lp);
 
             }
         };
 
 
-
         record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Starttime = System.currentTimeMillis();
-                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)timeview.getLayoutParams();
-                lp.width=250;
+                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) timeview.getLayoutParams();
+                lp.width = 250;
                 timeview.setLayoutParams(lp);
 
-                timehandler.postDelayed(timerunnable,0);
-                Constants.sondcheck=1;
+                timehandler.postDelayed(timerunnable, 0);
+                Constants.sondcheck = 1;
 
 
                 try {
@@ -122,7 +119,7 @@ public class Soundrecorder extends AppCompatActivity {
                             play.setEnabled(true);
                             Toast.makeText(getApplicationContext(), "Audio Recorder successfully", Toast.LENGTH_SHORT).show();
                         }
-                    },3000);
+                    }, 3000);
                 } catch (IllegalStateException ise) {
                     // make something ...
                 } catch (IOException ioe) {
@@ -143,8 +140,8 @@ public class Soundrecorder extends AppCompatActivity {
                 myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
                 myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
                 myAudioRecorder.setOutputFile(flappsound);
-                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)timeview.getLayoutParams();
-                lp.width= (int) (0);
+                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) timeview.getLayoutParams();
+                lp.width = (int) (0);
                 timeview.setLayoutParams(lp);
                 record.setEnabled(true);
                 play.setEnabled(false);
@@ -162,7 +159,7 @@ public class Soundrecorder extends AppCompatActivity {
                 try {
                     mediaPlayer.reset();
                     mediaPlayer.setDataSource(flappsound);
-                    mediaPlayer.setVolume(50,50);
+                    mediaPlayer.setVolume(50, 50);
                     mediaPlayer.prepare();
                     mediaPlayer.start();
 
@@ -173,15 +170,56 @@ public class Soundrecorder extends AppCompatActivity {
             }
         });
 
+        Button clickButton9 = (Button) findViewById(R.id.NoSongButton);
+        if (clickButton9 != null) {
+            clickButton9.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Constants.NoSong = 1;
+                }
+            });
+        }
+        Button clickButton8 = (Button) findViewById(R.id.SongButton);
+        if(clickButton8 !=null){
+            clickButton8.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    startAudioSelect();
+                }
+            });
+        }
+
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent backmain = new Intent(Soundrecorder.this,MainActivity.class);
+        Intent backmain = new Intent(Soundrecorder.this, MainActivity.class);
         startActivity(backmain);
         finish();
     }
 
 
 
+    public void startAudioSelect() {
+        try {
+            Intent goo = new Intent(Soundrecorder.this, SoundUploadMain.class);
+            startActivity(goo);
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("OOOK");
+        }
+
+
+    }
+
+    public void back(View view) {
+        Intent backmain2 = new Intent(Soundrecorder.this, MainActivity.class);
+        startActivity(backmain2);
+        finish();
+    }
 }
+

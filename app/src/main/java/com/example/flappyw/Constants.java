@@ -10,7 +10,7 @@ public class Constants {
     public static int SCREEN_WIDTH_2;
     public static int SCREEN_HEIGHT_2;
     public static int TUBE_HEIGHT;
-    public static Bitmap DefaultTube ;
+   public static Bitmap DefaultTube ;
     public static Bitmap DefaultCharackter;
     public static Bitmap DefaultBackground;
     public static int CheckCodeTube=0;
