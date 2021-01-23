@@ -54,14 +54,7 @@ public class Soundrecorder extends AppCompatActivity {
         play.setEnabled(false);
 
 
-        myAudioRecorder = new MediaRecorder();
-        myAudioRecorder.reset();
-        String flappsound = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        myAudioRecorder.setOutputFile(flappsound);
-        Constants.flappstring = flappsound;
+
 
 
         Handler timehandler = new Handler();
@@ -76,7 +69,7 @@ public class Soundrecorder extends AppCompatActivity {
                     timehandler.removeCallbacks(this);
                 }
                 ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) timeview.getLayoutParams();
-                lp.width = (int) (330 * milis / Constants.SCREEN_WIDTH);
+                lp.width = (int) (330 * milis / (Constants.SCREEN_WIDTH));
                 timeview.setLayoutParams(lp);
 
             }
@@ -96,12 +89,18 @@ public class Soundrecorder extends AppCompatActivity {
 
 
                 try {
+                    initMediarecorder();
+
+                    System.out.println("erneuter reset  erfolgreich");
                     myAudioRecorder.prepare();
+                    System.out.println("Mediaplayer start erfolgreich");
                     myAudioRecorder.start();
+                    System.out.println("Mediaplayer start erfolgreich");
                     Handler recordhandler = new Handler();
                     recordhandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            System.out.println("Start runnable");
 
                             try {
                                 myAudioRecorder.stop();
@@ -121,9 +120,11 @@ public class Soundrecorder extends AppCompatActivity {
                         }
                     }, 3000);
                 } catch (IllegalStateException ise) {
-                    // make something ...
+                    ise.printStackTrace();
+                    System.out.println("Illegal state exeption");
                 } catch (IOException ioe) {
-                    // make something
+                    System.out.println("IO exeption");
+                    ioe.printStackTrace();
                 }
             }
         });
@@ -135,7 +136,7 @@ public class Soundrecorder extends AppCompatActivity {
                 myAudioRecorder = new MediaRecorder();
                 myAudioRecorder.reset();
 
-                String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
+                String outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/record.3gp";
                 myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                 myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
                 myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
@@ -154,10 +155,13 @@ public class Soundrecorder extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 MediaPlayer mediaPlayer = new MediaPlayer();
 
                 try {
+                    System.out.println("soundabspielen");
                     mediaPlayer.reset();
+                    flappsound = Constants.flappstring;
                     mediaPlayer.setDataSource(flappsound);
                     mediaPlayer.setVolume(50, 50);
                     mediaPlayer.prepare();
@@ -220,6 +224,19 @@ public class Soundrecorder extends AppCompatActivity {
         Intent backmain2 = new Intent(Soundrecorder.this, MainActivity.class);
         startActivity(backmain2);
         finish();
+    }
+    public void initMediarecorder(){
+        myAudioRecorder = new MediaRecorder();
+        System.out.println("neuer Mediaplayer erfolgreich");
+
+        System.out.println("Mediaplayer reset erfolgreich");
+        String flappsound = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
+        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setOutputFile(flappsound);
+        Constants.flappstring = flappsound;
+
     }
 }
 

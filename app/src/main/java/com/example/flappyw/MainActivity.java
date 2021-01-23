@@ -7,6 +7,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -51,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
         checkIntents();
         initDefaultBitmaps();
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1024);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, 10);
+        }
 
 
         myPreferences = getSharedPreferences(sharedFile, MODE_PRIVATE);
@@ -127,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         Constants.DefaultTube = BitmapFactory.decodeResource(this.getResources(), R.drawable.t3);
     }
 
-    public void checkIntents(){
+   public void checkIntents(){
         if(getIntent() != null){
             try {
                 Tube = BitmapFactory.decodeStream(this.openFileInput("Tube"));
